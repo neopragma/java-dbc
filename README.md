@@ -2,6 +2,8 @@
 
 [Design by Contract](https://wiki.c2.com/?DesignByContract) support for Java.
 
+Note: This is not on Maven Central yet.
+
 ## Why this? 
 
 This project started life as a self-learning exercise for me, as much about writing Java annotations as about DbC as such, but it may actually prove to be useful for some people. 
@@ -133,7 +135,7 @@ Argument of type _Number_ must be between _min_ and _max_ exclusive.
 
 Argument of type _Number_ must be between _min_ and _max_ inclusive. 
 
-### @MustBeOutisdeRange(min = _min_, max = _max_)
+### @MustBeOutsideRange(min = _min_, max = _max_)
 
 Argument of type _Number_ must outside the range between _min_ and _max_ inclusive. 
 
