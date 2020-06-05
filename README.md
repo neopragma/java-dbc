@@ -48,8 +48,7 @@ Here is a more complicated example:
             @NotNull @MinimumLength(value=5) @MaximumLength(value=20) @MustMatch(regex="^[a-zA-Z]+$") String someString,
             @NotNull @NotEmpty @MustContainKey(key="key1") @MustNotContainKey(key="key2") Map<String, String> testMap,
             @NotNull @MustBeInRangeExclusive(min=50, max=60) Integer someNumber,
-            @NotNull @MinimumValue(value=10) Double someDouble
-    ) {
+            @NotNull @MinimumValue(value=10) Double someDouble) {
         Constraints.check(someString, testMap, someNumber, someDouble);
     }
 </pre>
@@ -137,7 +136,7 @@ Argument of type _Number_ must be between _min_ and _max_ inclusive.
 
 ### @MustBeOutsideRange(min = _min_, max = _max_)
 
-Argument of type _Number_ must outside the range between _min_ and _max_ inclusive. 
+Argument of type _Number_ must be outside the range between _min_ and _max_ inclusive. 
 
 ### @MustContainKey(key = _value_) 
 
