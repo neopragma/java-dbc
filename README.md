@@ -65,28 +65,26 @@ Client code calls the method this way:
         14.89);
 </pre>
 
-There is a known problem: You must include all the arguments passed into the method when you call _Constraints.check()_ or the library will throw _IndexOutOfBoundsException_. This will be fixed in a future release. 
-
-An example: You should be able to write this:
+There is a known problem: You can't skip arguments on the call to _Constraints.check()_ or the library will get confused.
+An example: In principle, you should be able to write this:
 
 <pre>
-    int add(@CustomConstraint(className="com.neopragma.dbc.EvenNumbersOnlyRule") int val1, int val2) {
+    String add(@CustomConstraint(String msg, className="com.neopragma.dbc.EvenNumbersOnlyRule") int val1, int val2) {
         Constraints.check(val1);
-        return val1 + val2;
+        return msg + ": " + (val1 + val2);
     }
 </pre>
 
-
-
-Instead, you must write this, even though you are not checking the second argument:
+Instead, you must write this, even though your intention is only to check the second argument:
 
 <pre>
-    int add(@CustomConstraint(className="com.neopragma.dbc.EvenNumbersOnlyRule") int val1, int val2) {
-        Constraints.check(val1, val2);
-        return val1 + val2;
+    String add(@CustomConstraint(String msg, className="com.neopragma.dbc.EvenNumbersOnlyRule") int val1, int val2) {
+        Constraints.check(msg, val1);
+        return msg + ": " + (val1 + val2);
     }
 </pre>
 
+You can omit trailing arguments after the last one that has an annotation on it, but otherwise the arguments passed to _Constraints.check()_ must align one-for-one with the arguments passed into the enclosing method.
 
 ## Annotations 
 

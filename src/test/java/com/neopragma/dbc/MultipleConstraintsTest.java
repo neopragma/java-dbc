@@ -17,14 +17,16 @@ public class MultipleConstraintsTest {
                 "Happy",
                 testMap,
                 55,
-                14.89
+                14.89,
+                "canOmitLastArgumentFromTheCheck"
         );
     }
     void processMultipleConstraints(
             @NotNull @MinimumLength(value=5) @MaximumLength(value=20) @MustMatch(regex="^[a-zA-Z]+$") String someString,
             @NotNull @NotEmpty @MustContainKey(key="key1") @MustNotContainKey(key="key2") Map<String, String> testMap,
             @NotNull @MustBeInRangeExclusive(min=50, max=60) Integer someNumber,
-            @NotNull @MinimumValue(value=10) Double someDouble
+            @NotNull @MinimumValue(value=10) Double someDouble,
+            String canOmitLastArgumentFromTheCheck
     ) {
         Constraints.check(someString, testMap, someNumber, someDouble);
     }

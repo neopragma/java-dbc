@@ -26,7 +26,7 @@ public class CustomConstraintsTest {
     }
 
     int add(@CustomConstraint(className="com.neopragma.dbc.EvenNumbersOnlyRule") int val1, int val2) {
-        Constraints.check(val1, val2);
+        Constraints.check(val1);
         return val1 + val2;
     }
 }

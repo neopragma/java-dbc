@@ -44,7 +44,7 @@ public class Constraints {
                 }
             }
             Parameter[] parameters = theMethod.getParameters();
-            for (int i = 0 ; i < parameters.length ; i++) {
+            for (int i = 0 ; i < args.length ; i++) {
                 for (Class constraint : constraints) {
                     ((Rule) constraint.getConstructor().newInstance()).check(parameters[i], args[i]);
                 }
