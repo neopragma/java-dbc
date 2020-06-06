@@ -1,0 +1,8 @@
+build
+.class
+target
+build
+.DS_Store
+*.backup.xlogic*
+*.~lock*
+.gradle
