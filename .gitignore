@@ -6,3 +6,4 @@ build
 *.backup.xlogic*
 *.~lock*
 .gradle
+.idea
