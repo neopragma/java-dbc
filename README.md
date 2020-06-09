@@ -28,22 +28,22 @@ When a value does not conform with a check, the library throws _ConstraintViolat
 
 Here is an example from the unit test suite: 
 
-<pre>
+```java
     String blend(@NotBlank String val1, @NotBlank String val2) {
         Constraints.check(val1, val2);
         return val1 + val2;
     }
-</pre>
+```
 
 Client code calls the method this way: 
 
-<pre>
+```java
     blend("something", "somethingElse");
-</pre>
+```
 
 Here is a more complicated example: 
 
-<pre>
+```java
     void processMultipleConstraints(
             @NotNull @MinimumLength(value=5) @MaximumLength(value=20) @MustMatch(regex="^[a-zA-Z]+$") String someString,
             @NotNull @NotEmpty @MustContainKey(key="key1") @MustNotContainKey(key="key2") Map<String, String> testMap,
@@ -51,11 +51,11 @@ Here is a more complicated example:
             @NotNull @MinimumValue(value=10) Double someDouble) {
         Constraints.check(someString, testMap, someNumber, someDouble);
     }
-</pre>
+```
 
 Client code calls the method this way:
 
-<pre>
+```java
     Map<String, String> testMap = new HashMap();
     testMap.put("key1", "value1");
     processMultipleConstraints(
@@ -63,26 +63,26 @@ Client code calls the method this way:
         testMap,
         55,
         14.89);
-</pre>
+```
 
 There is a known problem: You can't skip arguments on the call to _Constraints.check()_ or the library will get confused.
 An example: In principle, you should be able to write this:
 
-<pre>
+```java
     String add(@CustomConstraint(String msg, className="com.neopragma.dbc.EvenNumbersOnlyRule") int val1, int val2) {
         Constraints.check(val1);
         return msg + ": " + (val1 + val2);
     }
-</pre>
+```
 
 Instead, you must write this, even though your intention is only to check the second argument:
 
-<pre>
+```java
     String add(@CustomConstraint(String msg, className="com.neopragma.dbc.EvenNumbersOnlyRule") int val1, int val2) {
         Constraints.check(msg, val1);
         return msg + ": " + (val1 + val2);
     }
-</pre>
+```
 
 You can omit trailing arguments after the last one that has an annotation on it, but otherwise the arguments passed to _Constraints.check()_ must align one-for-one with the arguments passed into the enclosing method.
 
@@ -172,23 +172,23 @@ Argument of type _Object_ must be a null reference.
 
 The method client code calls to trigger verifying the contract is _Constraints.check(Object... args)_. Because of the way _varargs_ are supported in Java, all the arguments get flattened into a single one-dimensional array. An effect is that the _check()_ method can't distinguish between these two constructions: 
 
-<pre>
+```java
 void methodName(Integer a, Date d, String[4] s, Integer b)
 
 void methodName(Object[] o) 
-</pre>
+```
 
 So if you call _methodName_ like this: 
 
-<pre>
+```java
 methodName(16, new Date(), new String[] { "alpha", "beta", "delta", "gamma" }, 37)
-</pre>
+```
 
 The _check()_ method sees this argument list:
 
-<pre>
+```java
 Object [16, _date_, "alpha", "beta", "delta", "gamma", 37]
-</pre>
+```
 
 To enforce a contract involving an array argument, I suggest first converting the array into a _Collection_ such as _List_. Unfortunately, you might have to extract a method just for the purpose of enforcing the contract on the array argument in order to avoid messing up the other arguments passed to your public method. 
 
@@ -199,7 +199,4 @@ If the array argument is the only argument passed to the public method, then _ch
 JSON documents are basically _String_ values unless they are parsed or interpreted by code that understands the JSON format. To enforce a contract pertaining to a JSON document, I suggest first converting the document into a _Collection_ such as _Map_, using your favorite JSON library. Then you can use the annotations that operate on _Collection_ types. 
 
 I considered building this into the tool, but decided not to impose a dependency on a JSON library that might not be the one you prefer to use, or that might introduce a transitive dependency that causes problems later on as various other dependencies move to new versions.
-
-
-
 
